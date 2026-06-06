@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-neon-orange: #ff6b00;
+  --color-neon-orange-soft: #ff8c42;
+  --color-neon-purple: #9d4edd;
+  --color-neon-cyan: #00f5ff;
+  --color-dark-bg: #0a0a0a;
+  --color-dark-surface: #111111;
+  --color-dark-surface-elevated: #1a1a1a;
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Clash Display', 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  :root {
+    background-color: var(--color-dark-bg);
+    color: #ffffff;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: var(--color-dark-bg);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl shadow-xl hover:shadow-2xl hover:border-white/20 transition-all duration-300;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-orange to-neon-purple;
+  }
+
+  .neon-border {
+    @apply border border-neon-orange/50 shadow-[0_0_15px_rgba(255,107,0,0.3)];
+  }
+
+  .neon-glow {
+    filter: drop-shadow(0 0 10px rgba(255,107,0,0.5));
+  }
+}
+
+/* Lenis Smooth Scrolling */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
