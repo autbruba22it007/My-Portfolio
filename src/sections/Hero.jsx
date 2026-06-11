@@ -43,7 +43,7 @@ export default function Hero() {
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tighter leading-[1.05] w-full">
               <span className="text-white">Hi, I'm </span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff6b00] to-[#9d4edd]">Alex</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff6b00] to-[#9d4edd]">Isaac Bernods</span>
               <br />
               {/* <span className="text-white">Building the Future</span> */}
             </h1>
@@ -66,7 +66,7 @@ export default function Hero() {
               {/* Location */}
               <div className="flex items-center gap-2 text-[#888888]">
                 <FiMapPin className="w-5 h-5" />
-                <span className="font-medium text-lg">San Francisco, CA</span>
+                <span className="font-medium text-lg">Tamil Nadu, Erode</span>
               </div>
             </div>
 
