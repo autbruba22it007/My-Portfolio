@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { 
   FiFolder, 
@@ -13,9 +13,12 @@ import {
   FiGlobe, 
   FiLock, 
   FiCopy, 
-  FiActivity 
+  FiActivity,
+  FiShoppingCart,
+  FiBox,
+  FiMonitor
 } from 'react-icons/fi';
-import { FaQrcode } from 'react-icons/fa';
+import { FaQrcode, FaShopify } from 'react-icons/fa';
 
 const PROJECTS = [
   {
@@ -26,6 +29,7 @@ const PROJECTS = [
     type: "Personal Project",
     status: "LIVE",
     date: "2025",
+    image: "/images/projects/slice-url-two.vercel.app_.png",
     shortDescription: "A full-stack URL shortener that transforms long URLs into short, shareable links with custom aliases, bulk shortening, QR code generation, click tracking and an analytics dashboard.",
     overview: "SliceURL is a full-stack URL management platform that generates short links from long URLs. Users can create custom aliases, shorten multiple URLs simultaneously, generate downloadable QR codes, and monitor link performance through an analytics dashboard.",
     summary: "A full-stack URL shortener that transforms long URLs into short, shareable links with custom aliases, bulk shortening, QR code generation, click tracking and an analytics dashboard.",
@@ -59,12 +63,48 @@ const PROJECTS = [
   },
   {
     id: "02",
+    title: "Justmixx",
+    subtitle: "Shopify E-commerce Store",
+    category: "Commercial E-commerce",
+    type: "Commercial E-commerce Project",
+    status: "LIVE",
+    date: "2024",
+    image: "/images/projects/justmixx.png",
+    shortDescription: "Designed and developed a live e-commerce storefront for Justmixx using Shopify Liquid. The platform enables customers to explore household cleaning and DIY care products, browse collections, view product details, add products to their shopping cart and place orders online.",
+    overview: "Designed and developed a live e-commerce storefront for Justmixx using Shopify Liquid. The platform enables customers to explore household cleaning and DIY care products, browse collections, view product details, add products to their shopping cart and place orders online.",
+    summary: "Designed and developed a live e-commerce storefront for Justmixx using Shopify Liquid. The platform enables customers to explore household cleaning and DIY care products, browse collections, view product details, add products to their shopping cart and place orders online.",
+    liveUrl: "https://www.justmixx.com/",
+    sourceUrl: null, // Live commercial project - no repo link
+    highlights: [
+      { name: "Shopify Liquid Development", icon: <FaShopify className="w-4 h-4 text-[#ff6b00]" /> },
+      { name: "Dynamic Product Catalog", icon: <FiBox className="w-4 h-4 text-[#00f5ff]" /> },
+      { name: "E-commerce Cart & Checkout", icon: <FiShoppingCart className="w-4 h-4 text-[#9d4edd]" /> },
+      { name: "Responsive Storefront", icon: <FiMonitor className="w-4 h-4 text-[#00ff88]" /> },
+    ],
+    features: [
+      "Custom Shopify storefront development",
+      "Dynamic product and collection pages",
+      "Product detail pages",
+      "Shopping cart and add-to-cart functionality",
+      "Product categorization and navigation",
+      "Responsive mobile-friendly storefront",
+      "Product pricing and availability display",
+      "Online ordering and Shopify checkout integration"
+    ],
+    techCategories: [
+      { name: "Platform", skills: ["Shopify", "Shopify Liquid", "Shopify Theme Development"] },
+      { name: "Frontend", skills: ["HTML5", "CSS3", "JavaScript"] }
+    ]
+  },
+  {
+    id: "03",
     title: "Smart Billing System",
     subtitle: "Billing & Inventory Platform",
     category: "Full Stack Application",
     type: "Production System",
     status: "LIVE",
     date: "2024",
+    image: "/images/projects/smart-billing.png",
     shortDescription: "Production-ready billing app with product image support, stock tracking, dine-in/take-away orders, multiple payment modes, and CSV import/export.",
     overview: "Production-ready billing app with product image support, stock tracking, dine-in/take-away orders, multiple payment modes, and CSV import/export.",
     summary: "Production-ready billing app with product image support, stock tracking, dine-in/take-away orders, multiple payment modes, and CSV import/export.",
@@ -88,13 +128,14 @@ const PROJECTS = [
     ]
   },
   {
-    id: "03",
+    id: "04",
     title: "Influencer Calendar 2.0",
     subtitle: "Campaign Management",
     category: "Marketing Platform",
     type: "Internal Tool",
     status: "LIVE",
     date: "2024",
+    image: "/images/projects/influencer-calender.png",
     shortDescription: "Full influencer campaign tool — calendar view, posting & payment tracking, analytics dashboard, platform filters, notifications, and CSV import/export.",
     overview: "Full influencer campaign tool — calendar view, posting & payment tracking, analytics dashboard, platform filters, notifications, and CSV import/export.",
     summary: "Full influencer campaign tool — calendar view, posting & payment tracking, analytics dashboard, platform filters, notifications, and CSV import/export.",
@@ -118,13 +159,14 @@ const PROJECTS = [
     ]
   },
   {
-    id: "04",
+    id: "05",
     title: "Image Gallery — CRUD",
     subtitle: "Cloud File Manager",
     category: "File Management",
     type: "Personal Project",
     status: "LIVE",
     date: "2024",
+    image: "/images/projects/photo-gallery-six-eta.vercel.app_folder_8.png",
     shortDescription: "File manager with folder create/rename/delete and image upload, view, replace, and delete per folder — full CRUD with Supabase backend.",
     overview: "File manager with folder create/rename/delete and image upload, view, replace, and delete per folder — full CRUD with Supabase backend.",
     summary: "File manager with folder create/rename/delete and image upload, view, replace, and delete per folder — full CRUD with Supabase backend.",
@@ -148,13 +190,14 @@ const PROJECTS = [
     ]
   },
   {
-    id: "05",
+    id: "06",
     title: "Developer Portfolio",
     subtitle: "Developer Operating System",
     category: "Personal Brand",
     type: "Personal Project",
     status: "LIVE",
     date: "2024",
+    image: "/images/projects/photogravper-portfolio.png",
     shortDescription: "Personal portfolio website showcasing projects, skills, and experience with a modern, responsive design.",
     overview: "Personal portfolio website showcasing projects, skills, and experience with a modern, responsive design.",
     summary: "Personal portfolio website showcasing projects, skills, and experience with a modern, responsive design.",
@@ -242,8 +285,14 @@ function ProjectStatusBadge({ status, size = "md", className = "" }) {
 
 export default function Projects() {
   const [selectedProjectId, setSelectedProjectId] = useState(PROJECTS[0].id);
+  const [imgError, setImgError] = useState(false);
   const activeProject = PROJECTS.find(p => p.id === selectedProjectId) || PROJECTS[0];
   const shouldReduceMotion = useReducedMotion();
+
+  // Reset image error state when switching projects
+  useEffect(() => {
+    setImgError(false);
+  }, [selectedProjectId]);
 
   return (
     <div className="w-full flex flex-col pt-4 pb-8">
@@ -438,7 +487,7 @@ export default function Projects() {
                   </motion.div>
                 )}
 
-                {/* 3. Interactive Browser-Style Project Preview (Animated sequentially) */}
+                {/* 3. Interactive Browser-Style Project Preview with Actual Screenshot */}
                 <motion.div
                   initial={!shouldReduceMotion ? { opacity: 0, y: 10 } : {}}
                   animate={{ opacity: 1, y: 0 }}
@@ -458,13 +507,13 @@ export default function Projects() {
                         window.open(activeProject.liveUrl, '_blank', 'noopener,noreferrer');
                       }
                     }}
-                    className="block w-full aspect-[21/9] min-h-[240px] rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-[#ff6b00]/40 hover:shadow-[0_0_25px_rgba(255,107,0,0.18)] transition-all duration-300 overflow-hidden relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50"
+                    className="block w-full aspect-[21/9] min-h-[250px] sm:min-h-[300px] rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-[#ff6b00]/40 hover:shadow-[0_0_25px_rgba(255,107,0,0.18)] transition-all duration-300 overflow-hidden relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50"
                   >
                     {/* Scaled & Brightened Content Wrapper */}
-                    <div className="w-full h-full flex flex-col transition-all duration-300 group-hover:scale-[1.015] group-hover:brightness-105">
+                    <div className="w-full h-full flex flex-col transition-all duration-300 group-hover:scale-[1.01] group-hover:brightness-105">
                       
                       {/* Browser Header Bar */}
-                      <div className="flex items-center justify-between p-3 sm:px-6 sm:py-3 border-b border-white/5 bg-[#121212]/90 backdrop-blur-md shrink-0">
+                      <div className="flex items-center justify-between p-3 sm:px-6 sm:py-3 border-b border-white/5 bg-[#121212]/90 backdrop-blur-md shrink-0 z-10">
                         <div className="flex items-center gap-1.5">
                           <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
                           <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
@@ -477,13 +526,20 @@ export default function Projects() {
                         <ProjectStatusBadge status={activeProject.status} size="sm" />
                       </div>
 
-                      {/* App Body Content */}
-                      <div className="flex-1 relative overflow-hidden">
-                        {activeProject.previewType === 'sliceurl' ? (
-                          /* Bespoke SliceURL Visual Application Preview */
+                      {/* App Body Content: Actual Screenshot or Graceful Fallback */}
+                      <div className="flex-1 relative overflow-hidden bg-[#0c0c0c] flex items-center justify-center">
+                        {activeProject.image && !imgError ? (
+                          <img
+                            src={activeProject.image}
+                            alt={`${activeProject.title} live interface preview`}
+                            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                            loading="lazy"
+                            onError={() => setImgError(true)}
+                          />
+                        ) : activeProject.previewType === 'sliceurl' ? (
+                          /* Bespoke SliceURL Visual Application Preview (Fallback) */
                           <div className="w-full h-full p-4 sm:p-6 flex flex-col justify-between bg-gradient-to-b from-[#121212] via-[#0d0d0d] to-[#080808]">
                             <div className="my-auto py-1 flex flex-col gap-3">
-                              {/* Brand & Tagline */}
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                   <span className="text-base sm:text-lg font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b00] to-[#9d4edd]">
@@ -497,7 +553,6 @@ export default function Projects() {
                                 </div>
                               </div>
 
-                              {/* URL Input Bar Mockup */}
                               <div className="p-2 sm:p-2.5 rounded-xl bg-[#141414] border border-white/10 flex items-center justify-between gap-2 shadow-inner">
                                 <div className="flex items-center gap-2 text-white/70 text-xs font-mono min-w-0 pl-1">
                                   <FiLink className="text-[#ff6b00] shrink-0 w-3.5 h-3.5" />
@@ -515,9 +570,7 @@ export default function Projects() {
                                 </div>
                               </div>
 
-                              {/* Result & Stats Preview Row */}
                               <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                                {/* Generated Link Card */}
                                 <div className="sm:col-span-7 flex items-center justify-between p-2 sm:p-2.5 rounded-xl bg-[#141414]/80 border border-[#00f5ff]/20">
                                   <div className="flex items-center gap-2 min-w-0">
                                     <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] shrink-0 animate-pulse" />
@@ -535,7 +588,6 @@ export default function Projects() {
                                   </div>
                                 </div>
 
-                                {/* Analytics Mini Pills */}
                                 <div className="sm:col-span-5 grid grid-cols-2 gap-1.5">
                                   <div className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-[#141414]/80 border border-white/5">
                                     <span className="text-[9px] text-white/40 uppercase">Clicks</span>
@@ -550,16 +602,14 @@ export default function Projects() {
                             </div>
                           </div>
                         ) : (
-                          /* Wireframe UI for other projects */
+                          /* Wireframe UI Fallback */
                           <div className="w-full h-full p-4 sm:p-6 flex flex-col gap-4 opacity-60">
                             <div className="flex gap-6 h-full">
-                              {/* Sidebar */}
                               <div className="w-1/4 h-full flex flex-col gap-2.5 border-r border-white/5 pr-4">
                                 {[1, 2, 3, 4].map(i => (
                                   <div key={i} className="w-full h-7 rounded-lg bg-white/5" />
                                 ))}
                               </div>
-                              {/* Main Grid */}
                               <div className="flex-1 flex flex-col gap-3">
                                 <div className="flex gap-3">
                                   {[1, 2, 3].map(i => (

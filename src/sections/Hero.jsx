@@ -94,11 +94,16 @@ export default function Hero({ onExplore }) {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full p-[3px] bg-gradient-to-br from-[#ff6b00] to-[#9d4edd] shadow-[0_0_30px_rgba(255,107,0,0.15)] relative"
+              className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full p-[3px] bg-gradient-to-br from-[#ff6b00] to-[#9d4edd] shadow-[0_0_30px_rgba(255,107,0,0.15)] relative group"
             >
-              {/* Inner Dark Circle */}
-              <div className="w-full h-full rounded-full bg-[#1c1c1c] flex items-center justify-center">
-                <span className="text-[#666666] text-xl font-medium tracking-wide">Image</span>
+              {/* Inner Circle with actual profile image */}
+              <div className="w-full h-full rounded-full overflow-hidden bg-[#1c1c1c]">
+                <img
+                  src="/images/hero.png"
+                  alt="Isaac - Full Stack Developer"
+                  className="w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105 group-hover:brightness-105"
+                  loading="eager"
+                />
               </div>
 
               {/* Availability Badge */}
