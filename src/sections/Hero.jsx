@@ -1,7 +1,85 @@
-import { motion } from 'framer-motion';
-import { FiArrowRight, FiMapPin, FiCalendar, FiBriefcase, FiUsers, FiCoffee } from 'react-icons/fi';
+import { useEffect } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { FiArrowRight, FiMapPin, FiBriefcase, FiAward, FiCpu } from 'react-icons/fi';
+import { FaRocket } from 'react-icons/fa';
 
-export default function Hero() {
+const STATS = [
+  {
+    value: "2+",
+    label: "YEARS EXPERIENCE",
+    description: "Building production-grade web applications and business systems.",
+    icon: <FiBriefcase className="w-8 h-8 text-[#ff6b00]" />
+  },
+  {
+    value: "10+",
+    label: "PRODUCTION SYSTEMS",
+    description: "Production-ready applications, dashboards, automation tools, and business platforms.",
+    icon: <FaRocket className="w-8 h-8 text-[#9d4edd]" />
+  },
+  {
+    value: "2",
+    label: "HACKATHON WINS",
+    description: "1st Place in Digital Markets and Home Automation competitions.",
+    icon: <FiAward className="w-8 h-8 text-[#00f5ff]" />
+  },
+  {
+    value: "20+",
+    label: "AI WORKFLOWS BUILT",
+    description: "AI-assisted development workflows, automation, debugging, code generation, and productivity systems.",
+    icon: <FiCpu className="w-8 h-8 text-[#00ff88]" />
+  }
+];
+
+function StatCard({ stat, index }) {
+  const count = useMotionValue(0);
+  const match = stat.value.match(/(\d+)(.*)/);
+  const targetNum = match ? parseInt(match[1], 10) : 0;
+  const suffix = match ? match[2] : "";
+  const displayValue = useTransform(count, (latest) => Math.round(latest) + suffix);
+
+  useEffect(() => {
+    const controls = animate(count, targetNum, { duration: 1.5, ease: "easeOut" });
+    return controls.stop;
+  }, [count, targetNum]);
+
+  return (
+    <motion.div
+      title={stat.description}
+      whileHover="hover"
+      initial="rest"
+      variants={{
+        rest: { scale: 1, y: 0, backgroundColor: "#161616", boxShadow: "0 0 0px rgba(255,255,255,0)" },
+        hover: { scale: 1.03, y: -6, backgroundColor: "#1c1c1c", boxShadow: "0 0 20px rgba(255,255,255,0.05)", transition: { duration: 0.25 } }
+      }}
+      className="flex items-center justify-between px-6 py-5 rounded-[1.25rem] border border-white/5 transition-colors duration-300 w-full cursor-help"
+    >
+      <div className="flex flex-col">
+        <motion.span className="text-3xl lg:text-4xl font-bold text-white mb-1">
+          {displayValue}
+        </motion.span>
+        <span className="text-[10px] lg:text-xs font-bold text-[#888888] tracking-widest uppercase">
+          {stat.label}
+        </span>
+      </div>
+      <motion.div 
+        className="opacity-80"
+        variants={{
+          rest: { rotate: 0 },
+          hover: { rotate: 5, transition: { duration: 0.25 } }
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, -2, 0] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
+        >
+          {stat.icon}
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function Hero({ onExplore }) {
   return (
     <div className="w-full flex flex-col items-center pt-4">
 
@@ -37,7 +115,7 @@ export default function Hero() {
             {/* Full Stack Developer Tag */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#161616] border border-white/5 mb-6">
               <span className="text-[#00f5ff] font-bold text-sm tracking-widest">{`>_`}</span>
-              <span className="text-[#00f5ff] text-xs font-bold uppercase tracking-widest">FULL STACK DEVELOPER</span>
+              <span className="text-[#00f5ff] text-xs font-bold uppercase tracking-widest">AI-POWERED FULL STACK DEVELOPER</span>
             </div>
 
             {/* Main Heading */}
@@ -45,7 +123,6 @@ export default function Hero() {
               <span className="text-white">Hi, I'm </span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff6b00] to-[#9d4edd]">Isaac Bernods</span>
               <br />
-              {/* <span className="text-white">Building the Future</span> */}
             </h1>
 
             {/* Paragraph */}
@@ -56,12 +133,18 @@ export default function Hero() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-8">
               {/* Explore Button with gradient border */}
-              <button className="relative group rounded-full p-[1px] bg-gradient-to-r from-[#ff6b00] to-[#9d4edd] shadow-[0_0_15px_rgba(255,107,0,0.1)] transition-shadow hover:shadow-[0_0_25px_rgba(255,107,0,0.25)]">
+              <motion.button 
+                onClick={onExplore}
+                whileHover={{ scale: 1.03, boxShadow: "0 0 25px rgba(255,107,0,0.4)" }}
+                transition={{ duration: 0.25 }}
+                aria-label="Explore Portfolio"
+                className="relative group rounded-full p-[1px] bg-gradient-to-r from-[#ff6b00] to-[#9d4edd] shadow-[0_0_15px_rgba(255,107,0,0.1)]"
+              >
                 <div className="px-8 py-3.5 rounded-full bg-[#111] flex items-center gap-3 transition-colors group-hover:bg-[#161616]">
-                  <span className="text-white font-semibold">Explore My World</span>
-                  <FiArrowRight className="text-white/70 group-hover:text-white transition-colors w-5 h-5" />
+                  <span className="text-white font-semibold">Explore Portfolio</span>
+                  <FiArrowRight className="text-white/70 group-hover:text-white transition-all duration-[250ms] group-hover:translate-x-1 w-5 h-5" />
                 </div>
-              </button>
+              </motion.button>
 
               {/* Location */}
               <div className="flex items-center gap-2 text-[#888888]">
@@ -76,29 +159,8 @@ export default function Hero() {
         {/* Stat Cards Row */}
         <div className="w-full border-t border-white/5 pt-8 mt-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
-            {[
-              { value: "5+", label: "YEARS EXP", icon: <FiCalendar className="w-8 h-8 text-[#ff6b00]" /> },
-              { value: "40+", label: "PROJECTS", icon: <FiBriefcase className="w-8 h-8 text-[#9d4edd]" /> },
-              { value: "25+", label: "CLIENTS", icon: <FiUsers className="w-8 h-8 text-[#9d4edd]" /> },
-              { value: "1k+", label: "CUPS OF COFFEE", icon: <FiCoffee className="w-8 h-8 text-[#ff6b00]" /> },
-            ].map((stat) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ y: -4, backgroundColor: "#1c1c1c" }}
-                className="flex items-center justify-between px-6 py-5 rounded-[1.25rem] bg-[#161616] border border-white/5 transition-colors duration-300 w-full"
-              >
-                <div className="flex flex-col">
-                  <span className="text-3xl lg:text-4xl font-bold text-white mb-1">
-                    {stat.value}
-                  </span>
-                  <span className="text-[10px] lg:text-xs font-bold text-[#888888] tracking-widest uppercase">
-                    {stat.label}
-                  </span>
-                </div>
-                <div className="opacity-80">
-                  {stat.icon}
-                </div>
-              </motion.div>
+            {STATS.map((stat, index) => (
+              <StatCard key={stat.label} stat={stat} index={index} />
             ))}
           </div>
         </div>

@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiBriefcase, FiCalendar, FiMapPin, FiCheckCircle, FiDownload, FiTrendingUp, FiUsers, FiFolder, FiBox, FiStar, FiLayers, FiCode, FiServer, FiActivity } from 'react-icons/fi';
+import { FiBriefcase, FiCalendar, FiMapPin, FiCheckCircle, FiDownload, FiTrendingUp, FiUsers, FiFolder, FiBox, FiStar, FiLayers, FiCode, FiServer, FiActivity, FiCpu, FiTerminal, FiShoppingCart } from 'react-icons/fi';
+import { FaHtml5, FaCss3Alt, FaReact, FaNodeJs, FaPhp, FaShopify, FaGitAlt, FaGithub, FaAmazon } from 'react-icons/fa';
+import { SiJavascript, SiVite, SiTailwindcss, SiMysql, SiSqlite, SiSupabase, SiPostgresql, SiVercel, SiOpenai, SiMeta, SiGoogle } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
 
 const EXPERIENCES = [
   {
     id: 'velmora',
-    title: "Web Developer",
+    title: "AI-POWERED FULL STACK DEVELOPER",
     company: "Velmora Consumer Products LLP",
     date: "Jun 2025 - Present",
     location: "Tamil Nadu, Erode",
@@ -18,7 +21,7 @@ const EXPERIENCES = [
       { label: "Live Automations", value: "15+", icon: <FiServer className="w-5 h-5 text-[#00f5ff]" /> },
       { label: "Live Campaigns", value: "15+", icon: <FiActivity className="w-5 h-5 text-[#ff6b00]" /> }
     ],
-    summary: "Built and scaled multiple production-grade systems from scratch. Currently developing a company-wide operations platform covering marketing, finance, vendor management, inventory, R&D, and task management.",
+    summary: "Designing and developing production-grade full-stack applications using modern web technologies and AI-powered development workflows. Building scalable business systems including billing & inventory management, company operations platforms, Shopify e-commerce solutions, marketing automation tools, and custom dashboards while integrating AI to accelerate development and improve productivity.",
     achievements: [
       "Built a full billing and inventory management system with AI-assisted billing.",
       "Developed an influencer campaign management tool with calendar, analytics, and automated notifications.",
@@ -26,9 +29,43 @@ const EXPERIENCES = [
       "Managed influencer marketing campaigns end-to-end and ran targeted Meta Ads campaigns."
     ],
     techCategories: [
-      { name: "Frontend", skills: ["React", "HTML/CSS", "JavaScript", "Liquid"] },
-      { name: "Backend", skills: ["Node.js", "Supabase", "SQLite", "PHP", "MySQL"] },
-      { name: "Tools", skills: ["Shopify", "Meta Ads", "Claude", "Antigravity", "Git"] }
+      { name: "Frontend", skills: [
+        { name: "HTML5", icon: <FaHtml5 /> },
+        { name: "CSS3", icon: <FaCss3Alt /> },
+        { name: "JavaScript", icon: <SiJavascript /> },
+        { name: "React", icon: <FaReact /> },
+        { name: "Vite", icon: <SiVite /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss /> }
+      ] },
+      { name: "Backend", skills: [
+        { name: "Node.js", icon: <FaNodeJs /> },
+        { name: "PHP", icon: <FaPhp /> }
+      ] },
+      { name: "Database", skills: [
+        { name: "MySQL", icon: <SiMysql /> },
+        { name: "SQLite", icon: <SiSqlite /> },
+        { name: "Supabase", icon: <SiSupabase /> },
+        { name: "PostgreSQL", icon: <SiPostgresql /> }
+      ] },
+      { name: "Tools & AI", skills: [
+        { name: "Shopify", icon: <FaShopify /> },
+        { name: "Git", icon: <FaGitAlt /> },
+        { name: "Claude AI", icon: <FiCpu /> },
+        { name: "Antigravity", icon: <FiTerminal /> },
+        { name: "Gemini", icon: <SiGoogle /> },
+        { name: "ChatGPT", icon: <SiOpenai /> },
+        { name: "Google AI Studio", icon: <SiGoogle /> },
+        { name: "VS Code", icon: <VscVscode /> },
+        { name: "GitHub", icon: <FaGithub /> },
+        { name: "Vercel", icon: <SiVercel /> }
+      ] },
+      { name: "Digital Marketing", skills: [
+        { name: "Meta Ads", icon: <SiMeta /> },
+        { name: "Google Ads", icon: <SiGoogle /> },
+        { name: "Amazon Ads", icon: <FaAmazon /> },
+        { name: "Flipkart Ads", icon: <FiShoppingCart /> },
+        { name: "Influencer Marketing", icon: <FiUsers /> }
+      ] }
     ]
   },
   {
@@ -54,8 +91,17 @@ const EXPERIENCES = [
       "Won 1st place in two hackathons — Digital Markets (wholesale ordering web app) and Home Automation (Arduino auto-lighting via web interface)."
     ],
     techCategories: [
-      { name: "Full Stack", skills: ["HTML/CSS", "Javascript", "PhP", "MySQL"] },
-      { name: "Tools", skills: ["Git", "Docker", "Jest"] }
+      { name: "Full Stack", skills: [
+        { name: "HTML/CSS", icon: <FaHtml5 /> },
+        { name: "Javascript", icon: <SiJavascript /> },
+        { name: "PhP", icon: <FaPhp /> },
+        { name: "MySQL", icon: <SiMysql /> }
+      ] },
+      { name: "Tools", skills: [
+        { name: "Git", icon: <FaGitAlt /> },
+        { name: "Docker", icon: <FiBox /> },
+        { name: "Jest", icon: <FiCheckCircle /> }
+      ] }
     ]
   }
 ];
@@ -74,7 +120,9 @@ export default function Experience() {
         <div className="flex flex-col">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9d4edd]/10 border border-[#9d4edd]/20 text-[#9d4edd] text-xs font-semibold uppercase tracking-wider mb-4">
-              <FiBriefcase className="w-3.5 h-3.5" />
+              <motion.div animate={{ rotate: [-3, 3, -3] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
+                <FiBriefcase className="w-3.5 h-3.5" />
+              </motion.div>
               <span>Career Journey</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tight mb-2">Experience</h2>
@@ -118,7 +166,11 @@ export default function Experience() {
                       </span>
                       {isActive && (
                         <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-[#00ff88] bg-[#00ff88]/10 px-2 py-0.5 rounded-full border border-[#00ff88]/20 tracking-wider">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-pulse" /> Active
+                          <motion.span 
+                            animate={{ opacity: [0.7, 1, 0.7], scale: [1, 1.15, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-1.5 h-1.5 rounded-full bg-[#00ff88]" 
+                          /> Active
                         </span>
                       )}
                     </div>
@@ -136,7 +188,9 @@ export default function Experience() {
 
           <div className="mt-8">
             <button className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-white transition-all font-medium text-sm">
-              <FiDownload className="w-4 h-4" />
+              <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
+                <FiDownload className="w-4 h-4" />
+              </motion.div>
               Download Resume
             </button>
           </div>
@@ -163,10 +217,19 @@ export default function Experience() {
                 <div className="flex flex-col md:flex-row gap-6 items-start md:items-center mb-10 pb-8 border-b border-white/5">
 
                   {/* Company Avatar */}
-                  <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-3xl font-black text-white shadow-lg relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b00]/20 to-[#9d4edd]/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    {activeExperience.logoText}
-                  </div>
+                  <motion.div
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <motion.div 
+                      animate={{ boxShadow: ["0 0 0px rgba(157,78,221,0)", "0 0 20px rgba(157,78,221,0.4)", "0 0 0px rgba(157,78,221,0)"] }}
+                      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-3xl font-black text-white relative group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b00]/20 to-[#9d4edd]/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {activeExperience.logoText}
+                    </motion.div>
+                  </motion.div>
 
                   <div className="flex-1">
 
@@ -196,7 +259,22 @@ export default function Experience() {
                       className="flex flex-col p-4 rounded-2xl bg-[#161616] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
                     >
                       <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 rounded-full blur-xl -mr-8 -mt-8 transition-colors group-hover:bg-white/10" />
-                      <div className="mb-3">{metric.icon}</div>
+                      <motion.div 
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="mb-3 origin-left inline-block"
+                      >
+                        <motion.div
+                          animate={{ y: [0, -3, 0] }}
+                          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+                        >
+                          <motion.div
+                            animate={{ opacity: [0.8, 1, 0.8] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }}
+                          >
+                            {metric.icon}
+                          </motion.div>
+                        </motion.div>
+                      </motion.div>
                       <span className="text-2xl font-bold text-white mb-1">{metric.value}</span>
                       <span className="text-[10px] font-bold text-white/40 tracking-wider uppercase">{metric.label}</span>
                     </motion.div>
@@ -209,7 +287,10 @@ export default function Experience() {
                   {/* Role & Impact */}
                   <div>
                     <h4 className="flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider mb-4">
-                      <FiTrendingUp className="text-[#ff6b00]" /> Role & Impact
+                      <motion.div animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
+                        <FiTrendingUp className="text-[#ff6b00]" />
+                      </motion.div> 
+                      Role & Impact
                     </h4>
                     <p className="text-white/60 text-sm leading-relaxed">
                       {activeExperience.summary}
@@ -219,7 +300,10 @@ export default function Experience() {
                   {/* Key Achievements */}
                   <div>
                     <h4 className="flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider mb-4">
-                      <FiCheckCircle className="text-[#9d4edd]" /> Key Achievements
+                      <motion.div animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
+                        <FiCheckCircle className="text-[#9d4edd]" />
+                      </motion.div>
+                      Key Achievements
                     </h4>
                     <ul className="space-y-3">
                       {activeExperience.achievements.map((achievement, i) => (
@@ -230,7 +314,13 @@ export default function Experience() {
                           transition={{ delay: 0.2 + i * 0.1 }}
                           className="flex items-start gap-3 text-sm text-white/70"
                         >
-                          <FiCheckCircle className="w-4 h-4 text-[#9d4edd] shrink-0 mt-0.5" />
+                          <motion.div
+                            animate={{ scale: [1, 1.08, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+                            className="shrink-0 mt-0.5"
+                          >
+                            <FiCheckCircle className="w-4 h-4 text-[#9d4edd]" />
+                          </motion.div>
                           <span className="leading-relaxed">{achievement}</span>
                         </motion.li>
                       ))}
@@ -241,7 +331,10 @@ export default function Experience() {
                 {/* Tech Stack */}
                 <div className="mt-auto border-t border-white/5 pt-8">
                   <h4 className="flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider mb-6">
-                    <FiLayers className="text-[#00f5ff]" /> Technology Stack
+                    <motion.div animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}>
+                      <FiLayers className="text-[#00f5ff]" />
+                    </motion.div>
+                    Technology Stack
                   </h4>
 
                   <div className="flex flex-col gap-6">
@@ -252,16 +345,30 @@ export default function Experience() {
                         </span>
                         <div className="flex flex-wrap gap-2">
                           {category.skills.map((skill, j) => (
-                            <motion.span
-                              key={skill}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.3 + (i * 0.1) + (j * 0.05) }}
-                              whileHover={{ y: -2, backgroundColor: "rgba(255,255,255,0.1)" }}
-                              className="px-3 py-1.5 rounded-lg bg-[#161616] border border-white/5 text-xs font-medium text-white/70 transition-colors cursor-default"
+                            <motion.div
+                              key={skill.name || skill}
+                              variants={{
+                                hidden: { opacity: 0, scale: 0.9 },
+                                show: { opacity: 1, scale: 1, transition: { delay: 0.3 + (i * 0.1) + (j * 0.05) } },
+                                hover: { scale: 1.06, y: -2, backgroundColor: "#1c1c1c", boxShadow: "0 0 15px rgba(255,255,255,0.1)", transition: { duration: 0.2 } }
+                              }}
+                              initial="hidden"
+                              animate="show"
+                              whileHover="hover"
+                              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-[#161616] text-xs font-medium text-white/70 transition-colors cursor-default group/pill"
                             >
-                              {skill}
-                            </motion.span>
+                              {skill.icon && (
+                                <motion.span
+                                  variants={{
+                                    hover: { rotate: 4, filter: "drop-shadow(0 0 5px rgba(255,255,255,0.8))", color: "#fff", transition: { duration: 0.2 } }
+                                  }}
+                                  className="text-white/50 transition-all duration-200"
+                                >
+                                  {skill.icon}
+                                </motion.span>
+                              )}
+                              <span className="group-hover/pill:text-white transition-colors">{skill.name || skill}</span>
+                            </motion.div>
                           ))}
                         </div>
                       </div>

@@ -59,7 +59,20 @@ export default function App() {
                     isActive ? "text-white" : "text-[#888888] hover:text-white"
                   }`}
                 >
-                  {tab.icon}
+                  <motion.div
+                    animate={
+                      isActive 
+                        ? { scale: [1, 1.05, 1], y: [0, -2, 0] }
+                        : { y: [0, -2, 0] }
+                    }
+                    transition={{
+                      duration: isActive ? 2.5 : 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    {tab.icon}
+                  </motion.div>
                   <span className="hidden sm:inline">{tab.label}</span>
                   
                   {isActive && (
@@ -95,7 +108,7 @@ export default function App() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="w-full max-w-none"
             >
-              {activeTab === 'intro' && <Hero />}
+              {activeTab === 'intro' && <Hero onExplore={() => setActiveTab('projects')} />}
               {activeTab === 'experience' && <Experience />}
               {activeTab === 'education' && <Education />}
               {activeTab === 'skills' && <Skills />}
